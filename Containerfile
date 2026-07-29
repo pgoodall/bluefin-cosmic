@@ -1,7 +1,7 @@
 ###############################################################################
 # PROJECT NAME CONFIGURATION
 ###############################################################################
-# Name: bluefin-hyprland
+# Name: bluefin-cosmic
 #
 # IMPORTANT: Change "finpilot" above to your desired project name.
 # This name should be used consistently throughout the repository in:
@@ -36,7 +36,7 @@
 
 # OCI context images - imported below and pinned directly in their FROM lines.
 # The base image is pinned in the FROM line below and updated by Renovate.
-FROM ghcr.io/projectbluefin/common:latest@sha256:c97ab87370c7aa8fcf1a78a604155cc15b6e377b629b275dd520d62a97dbace3 AS common
+FROM ghcr.io/projectbluefin/common:latest@sha256:633ae6efa2f28f451812586cfeb5162d7b70054dda3e25510abdb3c6afa13be8 AS common
 FROM ghcr.io/ublue-os/brew:latest@sha256:07799dfe9ed44812a63d1b23c74e3e30b758a976f647032d916c34daf30f60a4 AS brew
 
 # Context stage - combine local and imported OCI container resources
@@ -51,12 +51,12 @@ COPY --from=brew /system_files /oci/brew
 
 # Base Image - GNOME included (Fedora official OSTree desktop)
 # Renovate will keep the digest pin up to date.
-FROM quay.io/fedora-ostree-desktops/silverblue:44@sha256:0c9f2d2db24eb9e553521ee5dabfdef7e678f90c03a2d0d5a8b464cb34508170
+FROM quay.io/fedora-ostree-desktops/silverblue:44@sha256:86944f169aebe295b0eb76dbeb0b44403146f5b001bfbdc26d4ecc52fa7917d6
 
 # Image identity - these define how bootc, fastfetch, and the ublue ecosystem
 # recognize your image. Change these to match your project name.
-ARG IMAGE_NAME="bluefin-hyprland"
-ARG IMAGE_VENDOR="projectbluefin"
+ARG IMAGE_NAME="bluefin-cosmic"
+ARG IMAGE_VENDOR="pgoodall"
 ARG UBLUE_IMAGE_TAG="stable"
 ARG BASE_IMAGE_NAME="silverblue"
 ARG FEDORA_MAJOR_VERSION="44"
