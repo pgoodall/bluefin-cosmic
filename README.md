@@ -1,6 +1,8 @@
-# Bluefin Hyprland
+# Bluefin Cosmic
 
-A template for building custom bootc operating system images based on the lessons from [Universal Blue](https://universal-blue.org/) and [Bluefin](https://projectbluefin.io). It is designed to be used manually, but is optimized to be bootstraped by GitHub Copilot. After set up you'll have your own custom Linux.
+This is my own custom build of Bluefin using the Cosmic Desktop instead of GNOME. At this time I'm focusing on making the image work for me. Once I feel the image is stable, I'll start working on making it more generic and usable for others.
+
+I used a template for building custom bootc operating system images based on the lessons from [Universal Blue](https://universal-blue.org/) and [Bluefin](https://projectbluefin.io). It is designed to be used manually, but is optimized to be bootstraped by GitHub Copilot. After set up you'll have your own custom Linux.
 
 This template uses the **multi-stage build architecture** from @projectbluefin/distroless, combining resources from multiple OCI containers for modularity and maintainability. See the [Architecture](#architecture) section below for details.
 
@@ -12,7 +14,12 @@ Instead, you create your own OS repository based on this template, allowing full
 
 ## What Makes this Raptor Different?
 
-Here are the changes from [Base Image Name]. This image is based on [Bluefin/Bazzite/Aurora/etc] and includes these customizations:
+Here are the changes from Fedora Silverblue 44:
+* Using Cosmic Desktop by default
+* Removed GNOME Desktop
+* Using Cosmic Greeter with `greetd`
+* Removed `gdm`
+* Replace `vim` with `emacs`
 
 ### Added Packages (Build-time)
 
