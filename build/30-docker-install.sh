@@ -13,7 +13,7 @@ set -euo pipefail
 echo "Installing Docker CE..."
 
 # Add Docker RPM repository GPG key
-rpm --import https://download.docker.com/linux/fedora/gpg
+# rpm --import https://download.docker.com/linux/fedora/gpg
 
 # Add Docker RPM repository
 cat >/etc/yum.repos.d/docker.repo <<'EOF'
