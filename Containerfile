@@ -137,6 +137,9 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 ##   RUN rm /opt && mkdir /opt
 RUN rm -rf /opt && ln -s /var/opt /opt
 
+## Try to make /dev writable, to get styrolite working
+RUN systemctl enable ostree-state-overlay@dev.service
+
 ### INIT
 ## Required for bootc images
 CMD ["/sbin/init"]
