@@ -95,6 +95,9 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build/20-cosmic-desktop.sh
 
+## Try to make /opt writable, to install packages to /opt
+RUN systemctl enable ostree-state-overlay@opt.service
+
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/cache/rpm-ostree \
@@ -135,10 +138,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 ## If you need /opt as an immutable real directory for build-time packages
 ## (e.g. google-chrome, docker-desktop), replace the next line with:
 ##   RUN rm /opt && mkdir /opt
-RUN rm -rf /opt && ln -s /var/opt /opt
-
-## Try to make /dev writable, to get styrolite working
-RUN systemctl enable ostree-state-overlay@dev.service
+# RUN rm -rf /opt && ln -s /var/opt /opt
 
 ### INIT
 ## Required for bootc images
