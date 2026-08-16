@@ -74,13 +74,13 @@ jobs:
           update-podman: "true"
           install-tools: '["just"]'
 
-      - name: Restore DNF cache
-        id: dnf-cache-restore
-        uses: projectbluefin/actions/bootc-build/dnf-cache@cad7d15c30224a7a1a49c5ff0fd2054ca57b9cfd # v1
-        with:
-          action: restore
-          cache-name: ${{ env.IMAGE_NAME }}
-          cache-bust: ${{ hashFiles('**/Containerfile') }}
+#      - name: Restore DNF cache
+#        id: dnf-cache-restore
+#        uses: projectbluefin/actions/bootc-build/dnf-cache@cad7d15c30224a7a1a49c5ff0fd2054ca57b9cfd # v1
+#        with:
+#          action: restore
+#          cache-name: ${{ env.IMAGE_NAME }}
+#          cache-bust: ${{ hashFiles('**/Containerfile') }}
 
       - name: Detect changes
         id: detect-changes
