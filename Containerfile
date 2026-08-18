@@ -93,8 +93,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=secret,id=GITHUB_TOKEN \
     --mount=type=tmpfs,dst=/boot \
     --mount=type=tmpfs,dst=/tmp \
-    rpmdb --rebuilddb && \
-    dnf5 clean all && \
     /ctx/build/20-cosmic-desktop.sh
 
 ## Try to make /opt writable, to install packages to /opt
