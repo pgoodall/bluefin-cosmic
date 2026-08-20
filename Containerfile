@@ -97,7 +97,8 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         echo "--- Install VS Code..." && \
         /ctx/build/40-vscode-install.sh && \
         echo "--- Install 1Password..." && \
-        /ctx/build/50-1password-prep.sh
+        /ctx/build/50-1password-prep.sh \
+    '
 
 ### CLEANUP
 ## Use Bluefin's clean-stage.sh to remove build artifacts before linting.
