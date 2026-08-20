@@ -29,8 +29,8 @@ env:
   IMAGE_NAME: "${{ github.event.repository.name }}"
   IMAGE_VENDOR: "${{ github.repository_owner }}"
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"
-  IMAGE_DESC: "My Customized Universal Blue Image"
-  IMAGE_KEYWORDS: "bootc,ublue,universal-blue"
+  IMAGE_DESC: "My Customized Universal Blue Image with Cosmic Desktop"
+  IMAGE_KEYWORDS: "bootc,ublue,universal-blue,cosmic"
   IMAGE_LOGO_URL: "https://avatars.githubusercontent.com/u/120078124?s=200&v=4"
   DEFAULT_TAG: "stable"
   REGISTRY_CACHE_WRITE: ${{ github.event_name != 'pull_request' && '1' || '0' }}
@@ -74,13 +74,13 @@ jobs:
           update-podman: "true"
           install-tools: '["just"]'
 
-#      - name: Restore DNF cache
-#        id: dnf-cache-restore
-#        uses: projectbluefin/actions/bootc-build/dnf-cache@cad7d15c30224a7a1a49c5ff0fd2054ca57b9cfd # v1
-#        with:
-#          action: restore
-#          cache-name: ${{ env.IMAGE_NAME }}
-#          cache-bust: ${{ hashFiles('**/Containerfile') }}
+      - name: Restore DNF cache
+        id: dnf-cache-restore
+        uses: projectbluefin/actions/bootc-build/dnf-cache@cad7d15c30224a7a1a49c5ff0fd2054ca57b9cfd # v1
+        with:
+          action: restore
+          cache-name: ${{ env.IMAGE_NAME }}
+          cache-bust: ${{ hashFiles('**/Containerfile') }}
 
       - name: Detect changes
         id: detect-changes
