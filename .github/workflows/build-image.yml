@@ -72,6 +72,7 @@ jobs:
         with:
           storage-backend: btrfs
           update-podman: "true"
+          native-overlay: "true"
           install-tools: '["just"]'
 
       - name: Restore DNF cache
