@@ -92,8 +92,9 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         /ctx/build/20-cosmic-desktop.sh && \
         # Make /opt writable by a privileged user
         systemctl enable ostree-state-overlay@opt.service && \
-        echo "--- Installing Docker CE..." && \
-        /ctx/build/30-docker-install.sh && \
+        # Disable Docker CE installation  until Silverblue 45 release
+        echo "--- Skipping Docker CE..." && \
+        # /ctx/build/30-docker-install.sh && \
         echo "--- Install VS Code..." && \
         /ctx/build/40-vscode-install.sh && \
         echo "--- Install 1Password..." && \
