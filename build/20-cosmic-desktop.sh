@@ -87,10 +87,17 @@ echo "::endgroup::"
 echo "::group:: Install Additional Utilities"
 
 # Install additional utilities that work well with COSMIC
+# oo7 needed in place of gnome-keyring
 dnf5 install -y \
     kitty \
     flatpak \
-    xdg-desktop-portal-cosmic
+    xdg-desktop-portal-cosmic \
+    cargo-credential-oo7 \
+    git-credential-oo7 \
+    oo7-cli \
+    oo7-daemon \
+    oo7-portal \
+    pam_oo7
 
 echo "Additional utilities installed"
 echo "::endgroup::"
