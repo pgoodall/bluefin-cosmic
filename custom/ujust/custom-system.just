@@ -49,7 +49,7 @@ configure-dev-groups:
 
 # Example toggle command with user choice
 [group('System')]
-toggle-example-feature:
+toggle-tailscale:
     #!/usr/bin/bash
     source /usr/lib/ujust/ujust.sh
     echo "This is an example toggle command."
@@ -57,12 +57,17 @@ toggle-example-feature:
     OPTION=$(Choose "Enable" "Disable" "Cancel")
     case "$OPTION" in
         "Enable")
-            echo "Enabling feature..."
-            # Add your enable logic here
+            echo "Enabling tailscale..."
+            # Enable and start tailscaled
+            sudo systemctl enable --now tailscaled
+            # Start Tailscale!
+            sudo tailscale up
             ;;
         "Disable")
-            echo "Disabling feature..."
-            # Add your disable logic here
+            echo "Disabling tailscale..."
+            sudo tailscale down
+            sudo systemctl stop tailscaled
+            sudo systemctl disable tailscaled
             ;;
         "Cancel")
             echo "No changes made."
