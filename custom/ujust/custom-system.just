@@ -47,13 +47,11 @@ configure-dev-groups:
 
     echo "Groups configured. Log out and back in for changes to take effect."
 
-# Example toggle command with user choice
+# Enable or disable Tailscale service
 [group('System')]
 toggle-tailscale:
     #!/usr/bin/bash
-    source /usr/bin/ujust
-    #echo "Current status: [check your status here]"
-    OPTION=$(Choose "Enable" "Disable" "Cancel")
+    OPTION=$(gum choose "Enable" "Disable" "Cancel")
     case "$OPTION" in
         "Enable")
             echo "Enabling tailscale..."
