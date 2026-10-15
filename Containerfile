@@ -95,6 +95,8 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         # Disable Docker CE installation  until Silverblue 45 release
         echo "--- Skipping Docker CE..." && \
         # /ctx/build/30-docker-install.sh && \
+        echo "--- Install Tailscale..." && \
+        /ctx/build/31-tailscale-install.sh && \
         echo "--- Install VS Code..." && \
         /ctx/build/40-vscode-install.sh && \
         echo "--- Install 1Password..." && \

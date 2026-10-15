@@ -19,8 +19,8 @@ set -euo pipefail
 ### Install Tailscale from Official Repository
 echo "Installing Tailscale..."
 # Add the tailscale repository
-sudo dnf5 config-manager --add-repo https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+sudo dnf5 -y config-manager addrepo --from-repofile https://pkgs.tailscale.com/stable/fedora/tailscale.repo
 # Install Tailscale
-sudo dnf5 install tailscale
+sudo dnf5 -y install tailscale
 
 echo "Tailscale installation complete!"
