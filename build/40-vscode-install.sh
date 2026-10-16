@@ -24,7 +24,8 @@ gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 EOF
 
 # Install Visual Studio Code
-dnf5 install -y code
+# (2026-10-16) Added libssl.so.3 to fix a bug with verifying sigs for extensions
+dnf5 install -y code 'libssl.so.3()(64bit)'
 
 # Clean up repo file (required - repos don't work at runtime in bootc images)
 rm -f /etc/yum.repos.d/vscode.repo
