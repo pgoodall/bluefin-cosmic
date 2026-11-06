@@ -36,7 +36,7 @@
 
 # OCI context images - imported below and pinned directly in their FROM lines.
 # The base image is pinned in the FROM line below and updated by Renovate.
-FROM ghcr.io/projectbluefin/common:latest@sha256:65415cbbaf39f190a586d556caf072ab4510a2726554c09e38b2d3931c5de6d5 AS common
+FROM ghcr.io/projectbluefin/common:latest@sha256:6b195a605d9e4e11a8666ce0285b87361d6ad563a4ccaf5d11e1c1ca9b5421a2 AS common
 FROM ghcr.io/ublue-os/brew:latest@sha256:974ce5e4d6d5fceb6151910957515a42c0eefced4ea386fdfadb0fbad84499a5 AS brew
 
 # Context stage - combine local and imported OCI container resources
@@ -51,7 +51,7 @@ COPY --from=brew /system_files /oci/brew
 
 # Base Image - GNOME included (Fedora official OSTree desktop)
 # Renovate will keep the digest pin up to date.
-FROM quay.io/fedora-ostree-desktops/silverblue:45@sha256:b371daf74cae8c6b16e0c3afb6fc7e6c0fc0933f3863685ce09493a6838de5c2
+FROM quay.io/fedora-ostree-desktops/silverblue:45@sha256:dcb88e747519bdbbc67f8548dac25c89a01a357203e0bad096026aaa2fbcaecb
 
 # Image identity - these define how bootc, fastfetch, and the ublue ecosystem
 # recognize your image. Change these to match your project name.
