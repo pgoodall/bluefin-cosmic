@@ -59,6 +59,13 @@ toggle-tailscale:
             sudo systemctl enable --now tailscaled
             # Start Tailscale!
             sudo tailscale up
+            # Add systray icon for Tailscale
+            tailscale configure systray --enable-startup=systemd
+            # Enable the systray icon to start on login
+            # https://tailscale.com/docs/features/client/linux-systray
+            tailscale configure systray --enable-startup=systemd
+            # Make the current user the operator for Tailscale on this device
+            sudo tailscale set --operator=$(id -un)
             ;;
         "Disable")
             echo "Disabling tailscale..."
