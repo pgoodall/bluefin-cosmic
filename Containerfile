@@ -51,7 +51,7 @@ COPY --from=brew /system_files /oci/brew
 
 # Base Image - GNOME included (Fedora official OSTree desktop)
 # Renovate will keep the digest pin up to date.
-FROM quay.io/fedora-ostree-desktops/silverblue:45@sha256:1ca661a14622f03a7fcaeb29f122e67f62320a89618c64da1c13f2cb5d338ef5
+FROM quay.io/fedora-ostree-desktops/silverblue:45@sha256:8e20ae172ef2751a36209a0ad7a0bbc9ccba2937f67feebf8946fc91824e8e0c
 
 # Image identity - these define how bootc, fastfetch, and the ublue ecosystem
 # recognize your image. Change these to match your project name.
