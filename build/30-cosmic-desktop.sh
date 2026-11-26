@@ -3,14 +3,27 @@
 set -euo pipefail
 
 ###############################################################################
-# Swap GNOME Desktop with Hyprland Desktop
+# Example: Swap GNOME Desktop with COSMIC Desktop
 ###############################################################################
-# Hyprland is a tiling desktop environment with some eye candy and a plugin system.
-# https://hypr.land/
+# This example demonstrates replacing the GNOME desktop environment with
+# System76's COSMIC desktop from their COPR repository.
 #
-# WARNING: This removes GNOME and replaces it with Hyprland. Only use this if
-# you want Hyprland as your desktop environment instead of GNOME.
+# COSMIC is a new desktop environment built in Rust by System76.
+# https://github.com/pop-os/cosmic-epoch
+#
+# To use this script:
+# 1. Rename to remove .example extension: mv 30-cosmic-desktop.sh.example 30-cosmic-desktop.sh
+# 2. Build - scripts run in numerical order automatically
+#
+# WARNING: This removes GNOME and replaces it with COSMIC. Only use this if
+# you want COSMIC as your desktop environment instead of GNOME.
 ###############################################################################
+
+### Checklist #################
+# [x] Added to Containerfile  #
+# [x] File is executable      #
+#                             #
+###############################
 
 # Source helper functions
 # shellcheck source=/dev/null
@@ -31,38 +44,32 @@ dnf5 remove -y \
 echo "GNOME desktop removed"
 echo "::endgroup::"
 
-echo "::group:: Install Hyprland Desktop"
+echo "::group:: Install COSMIC Desktop"
 
 # Install COSMIC desktop from System76's COPR
 # Using isolated pattern to prevent COPR from persisting
-copr_install_isolated copr_install_isolated "lionheartp/Hyprland" \
-    hyprland \
-    hyprland-guiutils \
-    hyprlauncher \
-    hyprlock \
-    hypridle \
+copr_install_isolated "ryanabx/cosmic-epoch" \
+    cosmic-session \
+    cosmic-greeter \
+    cosmic-comp \
+    cosmic-panel \
+    cosmic-launcher \
+    cosmic-applets \
+    cosmic-settings \
+    cosmic-files \
+    cosmic-edit \
+    cosmic-term \
+    cosmic-workspaces \
+    cosmic-store \
+    cosmic-wallpapers
 
-# Install Starship shell (https://starship.rs)
-copr_install_isolated "atim/starship" starship
-
-# Install wezterm - a Rust-based terminal
-copr_install_isolated "wezfurlong/wezterm-nightly" wezterm
-
-# Install some extra utilities that are available in Fedora
-dnf5 install -y \
-    gtkgreet \
-    greetd \
-    waybar \
-    gtklock \
-    wev
-
-echo "Hyprland desktop installed successfully"
+echo "COSMIC desktop installed successfully"
 echo "::endgroup::"
 
 echo "::group:: Configure Display Manager"
 
 # Enable cosmic-greeter (COSMIC's display manager)
-systemctl enable greetd
+systemctl enable cosmic-greeter
 
 # Set COSMIC as default session
 mkdir -p /etc/X11/sessions
@@ -81,10 +88,16 @@ echo "::endgroup::"
 echo "::group:: Install Additional Utilities"
 
 # Install additional utilities that work well with COSMIC
+# oo7 needed in place of gnome-keyring
 dnf5 install -y \
-    kitty \
     flatpak \
-    xdg-desktop-portal-cosmic
+    xdg-desktop-portal-cosmic \
+    cargo-credential-oo7 \
+    git-credential-oo7 \
+    oo7-cli \
+    oo7-daemon \
+    oo7-portal \
+    pam_oo7
 
 echo "Additional utilities installed"
 echo "::endgroup::"

@@ -86,21 +86,20 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/boot \
     --mount=type=tmpfs,dst=/tmp \
     bash -euo pipefail -c ' \
-        echo "--- Running 10-build.sh..." && \
-        /ctx/build/10-build.sh && \
+        echo "--- Running 10-overlay.sh..." && \
+        /ctx/build/10-overlay.sh && \
+        echo "--- Install and configure default packages and services" && \
+        /ctx/build/20-packages-and-services.sh && \
         echo "--- Install Cosmic Desktop..." && \
-        /ctx/build/20-cosmic-desktop.sh && \
+        /ctx/build/30-cosmic-desktop.sh && \
         # Make /opt writable by a privileged user
         systemctl enable ostree-state-overlay@opt.service && \
-        # Disable Docker CE installation  until Silverblue 45 release
-        echo "--- Skipping Docker CE..." && \
-        # /ctx/build/30-docker-install.sh && \
-        echo "--- Install Tailscale..." && \
-        /ctx/build/31-tailscale-install.sh && \
         echo "--- Install VS Code..." && \
         /ctx/build/40-vscode-install.sh && \
+        echo "--- Install Tailscale..." && \
+        /ctx/build/41-tailscale-install.sh && \
         echo "--- Install 1Password..." && \
-        /ctx/build/50-1password-prep.sh \
+        /ctx/build/42-1password-prep.sh \
     '
 
 ### CLEANUP
@@ -111,7 +110,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     --mount=type=tmpfs,dst=/boot \
-    /ctx/build/clean-stage.sh
+    /ctx/build/90-clean-stage.sh
 
 ### /opt
 ## Makes /opt writeable by default. Needs to be here to make the main image
@@ -120,6 +119,37 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 ## (e.g. google-chrome, docker-desktop), replace the next line with:
 ##   RUN rm /opt && mkdir /opt
 # RUN rm -rf /opt && ln -s /var/opt /opt
+
+### IMAGE METADATA
+## The Containerfile owns the metadata schema baked into every image. Local
+## builds and CI supply the dynamic values through `just build`; keeping these
+## ARGs late prevents a new version or timestamp from invalidating package and
+## overlay layers above.
+ARG IMAGE_DESC="My Customized Universal Blue Image"
+ARG IMAGE_CREATED=""
+ARG IMAGE_LOGO_URL="https://avatars.githubusercontent.com/u/120078124?s=200&v=4"
+ARG IMAGE_KEYWORDS="bootc,ublue,universal-blue"
+ARG IMAGE_REF="main"
+## The commit the image was built from. It is declared here, with the other
+## volatile metadata, so a new commit only invalidates the label layer.
+## Declaring it before 00-image-info.sh would invalidate the package and overlay
+## layers on every commit, which is why os-release does not carry it.
+ARG SHA_HEAD_SHORT=""
+
+LABEL org.opencontainers.image.title="${IMAGE_NAME}" \
+      org.opencontainers.image.version="${VERSION}" \
+      org.opencontainers.image.revision="${SHA_HEAD_SHORT}" \
+      org.opencontainers.image.description="${IMAGE_DESC}" \
+      org.opencontainers.image.source="https://github.com/${IMAGE_VENDOR}/${IMAGE_NAME}/blob/${IMAGE_REF}/Containerfile" \
+      org.opencontainers.image.url="https://github.com/${IMAGE_VENDOR}/${IMAGE_NAME}" \
+      org.opencontainers.image.vendor="${IMAGE_VENDOR}" \
+      org.opencontainers.image.created="${IMAGE_CREATED}" \
+      io.artifacthub.package.readme-url="https://raw.githubusercontent.com/${IMAGE_VENDOR}/${IMAGE_NAME}/refs/heads/main/README.md" \
+      io.artifacthub.package.logo-url="${IMAGE_LOGO_URL}" \
+      io.artifacthub.package.keywords="${IMAGE_KEYWORDS}" \
+      io.artifacthub.package.license="Apache-2.0" \
+      io.artifacthub.package.deprecated="false" \
+      containers.bootc="1"
 
 ### INIT
 ## Required for bootc images
